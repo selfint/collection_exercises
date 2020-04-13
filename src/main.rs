@@ -1,7 +1,10 @@
 use std::io::{self, Write};
 mod ex_1;
+mod ex_2;
 
 fn main() {
+    // test ex 1
+    println!("Exercise 1");
     let list_of_integers = get_integers();
     let mean = ex_1::get_mean(&list_of_integers);
     let median = ex_1::get_median(&list_of_integers);
@@ -9,6 +12,11 @@ fn main() {
     println!("The mean is: {}", mean);
     println!("The median is: {}", median);
     println!("The mode is: {}", mode);
+
+    // test ex 2
+    println!("\nExercise 2");
+    let word = get_word();
+    println!("Piggified version of {}: {}", &word.trim_end(), ex_2::piggify(&word));
 }
 
 fn get_integers() -> Vec<i32> {
@@ -38,4 +46,14 @@ fn get_integers() -> Vec<i32> {
     }
 
     integers
+}
+
+fn get_word() -> String {
+    let mut word = String::new();
+    print!("Enter word: ");
+    io::stdout().flush().unwrap(); // flush to stdout since we used print! and not println!
+    io::stdin()
+        .read_line(&mut word)
+        .expect("Failed to read line");
+    word
 }

@@ -12,7 +12,7 @@ pub fn get_mean(integers: &Vec<i32>) -> f32 {
     }
 
     // return average
-    (sum / integers.len() as i32) as f32
+    (sum as f32 / integers.len() as f32) as f32
 }
 
 pub fn get_median(integers: &Vec<i32>) -> i32 {
@@ -49,20 +49,12 @@ pub fn get_mode(integers: &Vec<i32>) -> i32 {
 
     // get the count of the number that appeard the most
     let mut max_count: u32 = 0;
-    for count in number_counter.values() {
-        if count > &max_count {
-            max_count = *count;
-        }
-    }
-
-    // get that number (if there is more than one, so be it who cares)
+    let mut mode: i32 = 0;
     for (number, count) in number_counter {
-        if count == max_count {
-            return number;
+        if count > max_count {
+            max_count = count;
+            mode = number;
         }
     }
-
-    // fail silently, maybe when I learn more I can fix this
-    // TODO: fix this
-    0
+    mode
 }

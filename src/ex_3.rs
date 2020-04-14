@@ -7,6 +7,8 @@ use std::io;
 
 // main interface that interacts with the user and calls other functions, runs in an infinite loop
 pub fn run_interface() {
+    println!("Running company management interface...");
+
     // generate company employee hash map
     let mut company_employees: HashMap<String, String> = HashMap::new();
     let mut company_departments: HashMap<String, Vec<String>> = HashMap::new();

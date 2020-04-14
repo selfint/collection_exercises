@@ -1,6 +1,7 @@
 use std::io::{self, Write};
 mod ex_1;
 mod ex_2;
+mod ex_3;
 
 fn main() {
     // test ex 1
@@ -17,6 +18,10 @@ fn main() {
     println!("\nExercise 2");
     let word = get_word();
     println!("Piggified version of {}: {}", &word.trim_end(), ex_2::piggify(&word));
+
+    // test ex 3
+    println!("\nExercise 3");
+    ex_3::run_interface();
 }
 
 fn get_integers() -> Vec<i32> {

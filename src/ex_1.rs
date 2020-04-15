@@ -3,7 +3,7 @@ Given a list of integers, use a vector and return the mean (the average value), 
 */
 use std::collections::HashMap;
 
-pub fn get_mean(integers: &Vec<i32>) -> f32 {
+pub fn get_mean(integers: &[i32]) -> f32 {
 
     // get sum of integers
     let mut sum = 0;
@@ -38,7 +38,7 @@ pub fn get_median(integers: &Vec<i32>) -> i32 {
     }
 }
 
-pub fn get_mode(integers: &Vec<i32>) -> i32 {
+pub fn get_mode(integers: &[i32]) -> i32 {
     let mut number_counter: HashMap<i32, u32> = HashMap::new();
 
     // count numbers in vec

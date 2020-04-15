@@ -145,26 +145,26 @@ fn retrieve_all_employees(company_employees: &HashMap<String, String>) {
     }
 }
 
-fn insert_to_sorted(element: &String, vector: &mut Vec<String>) {
+fn insert_to_sorted(element: &str, vector: &mut Vec<String>) {
     // assumes the vector is already sorted
     for (index, sorted_element) in vector.iter().enumerate() {
         let comparison = element.cmp(sorted_element);
         match comparison {
             Ordering::Less => {
-                vector.insert(index, element.clone());
+                vector.insert(index, element.to_string());
                 return;
             }
             Ordering::Equal => {
-                vector.insert(index, element.clone());
+                vector.insert(index, element.to_string());
                 return;
             }
             Ordering::Greater => (),
         }
     }
 
-    vector.push(element.clone());
+    vector.push(element.to_string());
 }
 
-fn process_input(input: &String) -> String {
+fn process_input(input: &str) -> String {
     input.trim_end().to_string()
 }

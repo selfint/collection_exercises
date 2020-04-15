@@ -15,10 +15,10 @@ pub fn get_mean(integers: &[i32]) -> f32 {
     (sum as f32 / integers.len() as f32) as f32
 }
 
-pub fn get_median(integers: &Vec<i32>) -> i32 {
+pub fn get_median(integers: &[i32]) -> i32 {
 
     // clone vec
-    let mut clone = integers.clone();
+    let mut clone = integers.to_owned();
 
     // sort clone using bubble sort
     for _ in 0..clone.len() {

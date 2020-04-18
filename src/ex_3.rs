@@ -5,42 +5,14 @@ use std::cmp::Ordering;
 use std::collections::HashMap;
 use std::io;
 
-// main interface that interacts with the user and calls other functions, runs in an infinite loop
-pub fn run_interface() {
-    println!("Running company management interface...");
-
-    // generate company employee hash map
-    let mut company_employees: HashMap<String, String> = HashMap::new();
-    let mut company_departments: HashMap<String, Vec<String>> = HashMap::new();
-    loop {
-        // get user action
-        let action = get_user_action();
-
-        match action {
-            UserAction::AddEmployee => {
-                add_employee(&mut company_employees, &mut company_departments)
-            }
-            UserAction::GetEmployeeInDepartment => {
-                retrieve_employees_in_department(&company_departments)
-            }
-            UserAction::GetAllEmployees => retrieve_all_employees(&company_employees),
-            UserAction::NoAction => (),
-            UserAction::Exit => {
-                return;
-            }
-        }
-    }
-}
-
 enum UserAction {
     AddEmployee,
     GetEmployeeInDepartment,
     GetAllEmployees,
     Exit,
-    NoAction,
 }
 
-fn get_user_action() -> UserAction {
+fn get_user_action() -> Option<UserAction> {
     // returns the index of the user action
     println!(
         "Choose an action:
@@ -62,11 +34,14 @@ fn get_user_action() -> UserAction {
         .expect("failed to convert answer to number");
 
     match answer {
-        1 => UserAction::AddEmployee,
-        2 => UserAction::GetEmployeeInDepartment,
-        3 => UserAction::GetAllEmployees,
-        4 => UserAction::Exit,
-        _ => UserAction::NoAction,
+        1 => Some(UserAction::AddEmployee),
+        2 => Some(UserAction::GetEmployeeInDepartment),
+        3 => Some(UserAction::GetAllEmployees),
+        4 => Some(UserAction::Exit),
+        _ => {
+            println!("No such action {}", answer);
+            None
+        }
     }
 }
 
@@ -109,7 +84,7 @@ fn retrieve_employees_in_department(company_departments: &HashMap<String, Vec<St
     let employees = match company_departments.get(&process_input(&department)) {
         Some(dep) => dep,
         None => {
-            println!("ERROR: no such department {}", department);
+            eprintln!("ERROR-new: no such department {}", department);
             return;
         }
     };
@@ -168,3 +143,36 @@ fn insert_to_sorted(element: &str, vector: &mut Vec<String>) {
 fn process_input(input: &str) -> String {
     input.trim_end().to_string()
 }
+
+// main interface that interacts with the user and calls other functions, runs in an infinite loop
+pub fn run_interface() {
+    println!("Running company management interface...");
+
+    // generate company employee hash map
+    let mut company_employees: HashMap<String, String> = HashMap::new();
+    let mut company_departments: HashMap<String, Vec<String>> = HashMap::new();
+    loop {
+        // get user action
+        let action = get_user_action();
+
+        match action {
+            Some(action) => match action {
+                UserAction::AddEmployee => {
+                    add_employee(&mut company_employees, &mut company_departments)
+                }
+
+                UserAction::GetEmployeeInDepartment => {
+                    retrieve_employees_in_department(&company_departments)
+                }
+
+                UserAction::GetAllEmployees => retrieve_all_employees(&company_employees),
+                UserAction::Exit => return,
+            },
+
+            None => {
+                println!("No such action");
+            },
+        }
+    }
+}
+

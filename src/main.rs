@@ -62,3 +62,20 @@ fn get_word() -> String {
         .expect("Failed to read line");
     word
 }
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn ex_1_check() {
+        assert_eq!(ex_1::get_mode(&vec![1, 1, 2, 3, 1, 4, 5]), 1);
+        assert_eq!(ex_1::get_median(&vec![1, 1, 2, 3, 1, 4, 5]), 2);
+        assert_eq!(ex_1::get_mean(&vec![1, 2, 3, 4, 5]), 3.0);
+    }
+
+    #[test]
+    fn ex_2_check() {
+        assert_eq!(ex_2::piggify("piggify"), "iggify-pay");
+    }
+}
